@@ -1,0 +1,13 @@
+# /home/sudotouchwoman/.config/systemd/user/fusuma.service
+[Unit]
+Description=Fusuma touchpad gestures
+
+[Service]
+ExecStart=/home/sudotouchwoman/.local/share/gem/ruby/3.0.0/bin/fusuma
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=default.target

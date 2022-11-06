@@ -1,0 +1,36 @@
+swipe:
+  4:
+    left:
+      sendkey: "LEFTALT+RIGHT" # history back
+    right:
+      sendkey: "LEFTALT+LEFT" # history forward
+    up:
+      sendkey: "LEFTCTRL+T" # open new tab
+    down:
+      sendkey: "ESC" # just esc
+
+# I tried to use pinch for zooming like on Windows.
+# but this did not work out
+# swipe/rotation gestures work finely though
+# pinch:
+#   2:
+#     in:
+#       sendkey: "LEFTALT" # This does not work
+#       # sendkey: "LEFTCTRL+KPPLUS" # This works
+#     out:
+#       sendkey: "LEFTALT" # Zoom out
+#       # sendkey: "LEFTCTRL+KPMINUS" # Zoom out
+
+rotate:
+  3:
+  # move between tabs in browser/VSCode
+    clockwise:
+      sendkey: LEFTCTRL+TAB
+    counterclockwise:
+      sendkey: "LEFTCTRL+LEFTSHIFT+TAB"
+
+  4:
+    clockwise:
+      sendkey: VOLUMEUP
+    counterclockwise:
+      sendkey: VOLUMEDOWN
