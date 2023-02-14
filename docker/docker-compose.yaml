@@ -1,0 +1,27 @@
+version: v3
+
+services:
+  test-smi:
+    image: cschranz/gpu-jupyter:v1.4_cuda-11.6_ubuntu-20.04_slim
+    # export your uid before docker-compose up:
+    # export USER_UID=$(id -u)
+    # (or just use $UID)
+    user: "${USER_UID}:0"
+    group_add:
+      - users
+    runtime: nvidia
+    ports:
+      - 8890:8888
+      - 8008:8008
+    volumes:
+      - ./data:/home/jovyan/data:rw
+      - ./notebooks:/home/jovyan/notebooks:rw
+      - ./artifacts:/home/jovyan/artifacts:rw
+    environment:
+      - JUPYTER_TOKEN=my-secret-token
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
