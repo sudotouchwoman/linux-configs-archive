@@ -59,3 +59,13 @@ tlp setecharge
 # charge to 100%
 tlp fullcharge
 ```
+
+### **Alacritty + SSH + Tmux:**
+
+When using tmux inside ssh with alacritty terminal, `unknown terminal type` error can arise
+and is discussed [here](https://github.com/alacritty/alacritty/issues/1208). Basically, this can be
+solved by modifying `TERM` environment variable like this:
+
+```bash
+export TERM=xterm-256color
+```
