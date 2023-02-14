@@ -1,11 +1,17 @@
 # **Configuring GPU access for Docker containers**
 
+## **Useful Links:**
++ https://github.com/NVIDIA/nvidia-docker
++ https://github.com/Tverous/pytorch-notebook
++ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
++ https://docs.docker.com/compose/gpu-support/
++ https://hub.docker.com/r/jupyter/datascience-notebook/
++ https://hub.docker.com/r/cschranz/gpu-jupyter
+
 ```bash
 # make sure docker daemon is up and running
 sysctl status docker
 sysctl start docker
-# in order to run docker commands without sudo
-groups
 ```
 
 In order to run docker commands without `sudo`, add your user
@@ -46,7 +52,7 @@ sudo systemctl restart docker
 docker run -it --gpus all --runtime nvidia nvidia/cuda:11.4.0-base-ubuntu20.04 nvidia-smi
 ```
 
-In order to run Jupyter notebook in a container with GPU access, one can use ![these images]() like this:
+In order to run Jupyter notebook in a container with GPU access, one can use [these images](https://hub.docker.com/r/cschranz/gpu-jupyter):
 
 ```yaml
 version: v3
