@@ -63,3 +63,19 @@ RUN apk add --update --no-cache openssh \
 ENTRYPOINT [ "ssh", "ubuntu@$HOSTNAME" ]
 ```
 
+Configure ssh daemon to only accept key authentication ([tip](https://linuxhandbook.com/ssh-disable-password-authentication/))
+
+Locate to `/etc/ssh/sshd_config` and make sure that the following line is present:
+
+```conf
+PasswordAuthentication no
+```
+
+One could also opt to forbid logging in directly as root:
+
+```conf
+PermitRootLogin no
+```
+
+Once all changes are done, restart the ssh deamon with `systemctl restart ssh`.
+
