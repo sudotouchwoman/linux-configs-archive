@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  pgsql-db:
+    build:
+      context: .
+      dockerfile: Dockerfile.pgre
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - data:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_PASSWORD=sus
+      - POSTGRES_USER=sudotouchwoman
+
+volumes:
+  data:

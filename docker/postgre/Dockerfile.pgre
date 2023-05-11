@@ -1,0 +1,19 @@
+# Example of installation of postgresql into a docker container
+# based on CentOS 7
+
+# https://www.baeldung.com/ops/postgresql-docker-setup
+# https://computingforgeeks.com/how-to-install-postgresql-14-centos-rhel-7/
+# https://www.baeldung.com/ops/postgresql-docker-setup
+# https://github.com/gdraheim/docker-systemctl-replacement
+FROM centos:7.9.2009
+
+RUN yum install -y epel-release maven wget &&\
+    yum clean all &&\
+    yum install -y  https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm &&\
+    yum install -y postgresql14-server postgresql14  postgresql14-contrib
+
+RUN wget "https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py" && mv systemctl.py /usr/bin/systemctl
+RUN chown root:root /usr/bin/systemctl && chmod 777 /usr/bin/systemctl &&\
+    /usr/bin/postgresql-14-setup initdb && systemctl enable --now postgresql-14
+
+CMD ["/usr/bin/systemctl"]
