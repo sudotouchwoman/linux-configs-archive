@@ -79,3 +79,12 @@ PermitRootLogin no
 
 Once all changes are done, restart the ssh deamon with `systemctl restart ssh`.
 
+Copy files between hosts using `rsync` (without trailing slash path is
+treated as a file, e.g. the first command will create directory `~/remote/local`
+with contents of local directory `local`):
+
+```bash
+rsync -a local user@host:~/remote
+rsync -a user@host:~/remote local
+```
+

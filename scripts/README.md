@@ -39,3 +39,9 @@ I tried to build `open3d` library from sources with headless rendering support.
 ```bash
 git clone --recursive --depth 1 --branch v0.16.0  https://github.com/intel-isl/Open3D
 ```
+
+Convert webpack image to `png` format (make sure you have `dwebp` installed):
+
+```bash
+dwebp image.webp -o image.png
+```
