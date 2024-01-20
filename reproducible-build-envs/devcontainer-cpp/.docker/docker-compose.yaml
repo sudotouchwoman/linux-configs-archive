@@ -1,0 +1,25 @@
+version: "3"
+
+# you can tune the installation for your needs,
+# this manifest serves as a baseline that fits
+# my requirements: fixup file permissions and
+# ssh keys working
+services:
+  builder:
+    image: devcontainer-cpp
+    hostname: shitbarn
+    ports: []
+    stdin_open: true
+    volumes:
+      # by mounting one level higher you can
+      # simultaneously access several repos within
+      # single container (you can change this mount to wherever you like)
+      - $PWD/..:/opt/exported:rw
+      # mounts ssh credentials and configs to ease accessing repos/other hosts
+      - ~/.ssh:/opt/.ssh:ro
+    environment:
+      # to prevent problems with file permissions, a new user is
+      # created in entrypoint script
+      - USER_UID=${USER_UID}
+      - USER_GID=${USER_GID}
+      - USER_NAME=${USER_NAME}

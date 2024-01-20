@@ -1,0 +1,42 @@
+FROM golang:1.19.3-alpine AS gosu-builder
+LABEL maintainer="sudotouchwoman"
+
+RUN go install github.com/tianon/gosu@latest
+
+# one can use other base images
+# like centos or ubuntu, but we will stick
+# to a debian-based python base image
+FROM python:3.11-slim
+
+COPY --from=gosu-builder /go/bin/gosu /usr/local/bin/gosu
+
+# colored terminal
+ENV TERM=xterm-256color
+# CMake version to install
+ARG CMAKE_VERSION=3.26.4
+
+# you can update this list with whichever packages you like
+# or go further and extract this logic into a separate script/manifest/stage
+RUN DEBIAN_FRONTEND=noninteractive apt update -y && apt upgrade -y &&\
+    apt install -y \
+	build-essential \
+	libssl-dev \
+	curl \
+	wget \
+	git \
+	sudo \
+	vim \
+	clang-format \
+	valgrind &&\
+    rm -rf /var/lib/apt/lists/* &&\
+    cd /tmp && wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh &&\
+    # build and install latest cmake version
+    chmod +x cmake-*.sh && ./cmake-*.sh --skip-license --exclude-subdir --prefix=/usr/local && cd .. && rm /tmp/*
+
+# gosu entrypoint for runtime UID/GID specification
+# (you may want to override this file with a custom one via
+# a mount at runtime, but this one has some sane defaults)
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

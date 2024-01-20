@@ -1,0 +1,10 @@
+FROM devcontainer-base
+LABEL maintainer="sudotouchwoman"
+
+RUN wget "https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py" &&\
+    mv systemctl.py /usr/bin/systemctl && chmod 555 /usr/bin/systemctl && ln -s /usr/bin/python3 /usr/bin/python2
+
+# run systemd as a default process,
+# so that container can be run in daemon mode
+# in the background
+CMD ["/usr/bin/systemctl"]
